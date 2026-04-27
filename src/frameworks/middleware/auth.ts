@@ -8,10 +8,11 @@ export interface AuthRequest extends Request {
         email: string;
         role: 'admin' | 'user';
     };
+    cookies: any; // Explicitly add cookies to avoid type errors
 }
 
-export const authenticate = (req: AuthRequest, res: Response, next: NextFunction) => {
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+export const authenticate = (req: any, res: Response, next: NextFunction) => {
+    const token = req.cookies?.token || req.headers?.authorization?.split(" ")[1];
 
     if (!token) {
         return res.status(401).json({ error: "Authentication required" });
@@ -27,7 +28,7 @@ export const authenticate = (req: AuthRequest, res: Response, next: NextFunction
 };
 
 export const authorize = (roles: string[]) => {
-    return (req: AuthRequest, res: Response, next: NextFunction) => {
+    return (req: any, res: Response, next: NextFunction) => {
         if (!req.user || !roles.includes(req.user.role)) {
             return res.status(403).json({ error: "Access denied" });
         }
