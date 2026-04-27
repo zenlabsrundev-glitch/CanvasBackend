@@ -1,5 +1,5 @@
 import { AppDataSource } from "../database";
-import { User } from "@/src/adapters/models/User";
+import { User } from "../../adapters/models/User";
 
 export class UserRepository {
     private repository = AppDataSource.getRepository(User);

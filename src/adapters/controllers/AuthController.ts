@@ -1,10 +1,10 @@
 import { Request, Response, Router } from "express";
 import Joi from "joi";
-import { UserRepository } from "@/src/infrastructure/services/UserRepository";
-import RegisterUsecase from "@/src/application/usecases/auth/register";
-import LoginUsecase from "@/src/application/usecases/auth/login";
-import { authenticate } from "@/src/frameworks/middleware/auth";
-import { validate } from "@/src/frameworks/middleware/validator";
+import { UserRepository } from "../../infrastructure/services/UserRepository";
+import RegisterUsecase from "../../application/usecases/auth/register";
+import LoginUsecase from "../../application/usecases/auth/login";
+import { authenticate } from "../../frameworks/middleware/auth";
+import { validate } from "../../frameworks/middleware/validator";
 
 const registerSchema = Joi.object({
     name: Joi.string().required(),
@@ -39,27 +39,28 @@ export class AuthController {
 
     async loginHandler(req: Request, res: Response) {
         const usecase = new LoginUsecase(this.userRepository);
-        const result = await usecase.exec(req.body);
+        const result = await usecase.exec({ email: req.body.email, password: req.body.password });
         if (typeof result === "string") {
             return res.status(401).json({ error: result });
         }
-        
-        res.cookie('token', result.token, {
+
+        res.cookie("token", result.token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: process.env.NODE_ENV === "production",
             maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
         });
-        
+
         return res.status(200).json(result);
     }
 
-    async logoutHandler(req: Request, res: Response) {
-        res.clearCookie('token');
-        return res.status(200).json({ message: "Logged out successfully" });
+    async meHandler(req: any, res: Response) {
+        const user = await this.userRepository.findById(req.user.id);
+        if (!user) return res.status(404).json({ error: "User not found" });
+        return res.status(200).json(user);
     }
 
-    async meHandler(req: any, res: Response) {
-        return res.status(200).json(req.user);
+    async logoutHandler(req: Request, res: Response) {
+        res.clearCookie("token");
+        return res.status(200).json({ message: "Logged out successfully" });
     }
 }

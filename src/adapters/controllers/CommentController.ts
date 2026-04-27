@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
-import { CommentRepository } from "@/src/infrastructure/services/CommentRepository";
-import AddCommentUsecase from "@/src/application/usecases/comment/addComment";
-import GetCommentsUsecase from "@/src/application/usecases/comment/getComments";
+import { CommentRepository } from "../../infrastructure/services/CommentRepository";
+import AddCommentUsecase from "../../application/usecases/comment/addComment";
+import GetCommentsUsecase from "../../application/usecases/comment/getComments";
 
 export class CommentController {
     public router: Router = Router();

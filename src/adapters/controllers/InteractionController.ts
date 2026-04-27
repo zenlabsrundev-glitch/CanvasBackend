@@ -1,10 +1,10 @@
 import { Request, Response, Router } from "express";
-import { PostRepository } from "@/src/infrastructure/services/PostRepository";
-import { authenticate, AuthRequest } from "@/src/frameworks/middleware/auth";
-import { AppDataSource } from "@/src/infrastructure/database";
-import { Like } from "@/src/adapters/models/Like";
-import { Bookmark } from "@/src/adapters/models/Bookmark";
-import { Logger } from "@/src/shared/logger";
+import { PostRepository } from "../../infrastructure/services/PostRepository";
+import { authenticate, AuthRequest } from "../../frameworks/middleware/auth";
+import { AppDataSource } from "../../infrastructure/database";
+import { Like } from "../models/Like";
+import { Bookmark } from "../models/Bookmark";
+import { Logger } from "../../shared/logger";
 
 export class InteractionController {
     public router: Router = Router();
@@ -74,4 +74,3 @@ export class InteractionController {
         return res.status(200).json(posts);
     }
 }
-

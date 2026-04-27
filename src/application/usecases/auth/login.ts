@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { config } from "@/src/config";
-import { UserRepository } from "@/src/infrastructure/services/UserRepository";
+import { config } from "../../../config";
+import { UserRepository } from "../../../infrastructure/services/UserRepository";
 
 export default class LoginUsecase {
     constructor(private userRepository: UserRepository) {}

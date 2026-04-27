@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import { User } from "@/src/adapters/models/User";
-import { UserRepository } from "@/src/infrastructure/services/UserRepository";
+import { User } from "../../../adapters/models/User";
+import { UserRepository } from "../../../infrastructure/services/UserRepository";
 
 export default class RegisterUsecase {
     constructor(private userRepository: UserRepository) {}

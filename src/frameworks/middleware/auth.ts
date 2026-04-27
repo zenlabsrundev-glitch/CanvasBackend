@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { config } from "@/src/config";
+import { config } from "../../config";
 
 export interface AuthRequest extends Request {
     user?: {
@@ -26,10 +26,10 @@ export const authenticate = (req: AuthRequest, res: Response, next: NextFunction
     }
 };
 
-export const authorize = (roles: Array<'admin' | 'user'>) => {
+export const authorize = (roles: string[]) => {
     return (req: AuthRequest, res: Response, next: NextFunction) => {
         if (!req.user || !roles.includes(req.user.role)) {
-            return res.status(403).json({ error: "Access denied: insufficient permissions" });
+            return res.status(403).json({ error: "Access denied" });
         }
         return next();
     };
