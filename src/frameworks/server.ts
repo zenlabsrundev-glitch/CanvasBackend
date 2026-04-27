@@ -13,25 +13,43 @@ const app = express();
 // Middlewares
 app.use(helmet());
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:5173"],
+    origin: true, // Allow all for now to help with Vercel testing, or add your Vercel frontend URL
     credentials: true
 }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Initialize Server
-const start = async () => {
-    try {
-        await initializeDataSource();
-        await routes(app, AppDataSource);
+let initialized = false;
 
-        app.listen(config.serverPort, () => {
-            Logger.info(`🚀 Server running on http://localhost:${config.serverPort}`);
-        });
-    } catch (error) {
-        Logger.error(`Failed to start server: ${error}`);
-        process.exit(1);
+// Vercel friendly initialization middleware
+app.use(async (req, res, next) => {
+    if (!initialized) {
+        try {
+            await initializeDataSource();
+            await routes(app, AppDataSource);
+            initialized = true;
+        } catch (error) {
+            return next(error);
+        }
     }
-};
+    next();
+});
 
-start();
+// Local development server
+if (process.env.NODE_ENV !== "production") {
+    const startLocal = async () => {
+        try {
+            await initializeDataSource();
+            await routes(app, AppDataSource);
+            initialized = true;
+            app.listen(config.serverPort, () => {
+                Logger.info(`🚀 Local server running on http://localhost:${config.serverPort}`);
+            });
+        } catch (error) {
+            Logger.error(`Failed to start local server: ${error}`);
+        }
+    };
+    startLocal();
+}
+
+export default app;
