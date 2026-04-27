@@ -20,6 +20,13 @@ export default async (app: express.Application, dataSource: DataSource) => {
     const authController = new AuthController(userRepository);
     const interactionController = new InteractionController(postRepository);
 
+    // Welcome message
+    app.get("/", (req: express.Request, res: express.Response) => res.json({ 
+        message: "Welcome to CanvasBlog API",
+        status: "Running",
+        documentation: "/api/posts"
+    }));
+
     // Health check
     app.get("/health", (req: express.Request, res: express.Response) => res.json({ status: "ok" }));
 
