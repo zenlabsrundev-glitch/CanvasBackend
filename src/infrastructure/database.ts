@@ -1,11 +1,11 @@
 import { DataSource } from "typeorm";
-import { Post } from "@/src/adapters/models/Post";
-import { Comment } from "@/src/adapters/models/Comment";
-import { Like } from "@/src/adapters/models/Like";
-import { Bookmark } from "@/src/adapters/models/Bookmark";
-import { User } from "@/src/adapters/models/User";
-import { config } from "@/src/config";
-import { Logger } from "@/src/shared/logger";
+import { Post } from "../adapters/models/Post";
+import { Comment } from "../adapters/models/Comment";
+import { Like } from "../adapters/models/Like";
+import { Bookmark } from "../adapters/models/Bookmark";
+import { User } from "../adapters/models/User";
+import { config } from "../config";
+import { Logger } from "../shared/logger";
 
 export const AppDataSource = new DataSource(config.postgresDb.databaseUrl ? {
   type: "postgres",

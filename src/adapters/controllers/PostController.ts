@@ -1,14 +1,14 @@
 import { Request, Response, Router } from "express";
 import Joi from "joi";
-import { PostRepository } from "@/src/infrastructure/services/PostRepository";
-import CreatePostUsecase from "@/src/application/usecases/post/createPost";
-import GetAllPostsUsecase from "@/src/application/usecases/post/getAllPosts";
-import GetPostBySlugUsecase from "@/src/application/usecases/post/getPostBySlug";
-import UpdatePostUsecase from "@/src/application/usecases/post/updatePost";
-import DeletePostUsecase from "@/src/application/usecases/post/deletePost";
-import { authenticate, authorize } from "@/src/frameworks/middleware/auth";
-import { validate } from "@/src/frameworks/middleware/validator";
-import { Logger } from "@/src/shared/logger";
+import { PostRepository } from "../../infrastructure/services/PostRepository";
+import CreatePostUsecase from "../../application/usecases/post/createPost";
+import GetAllPostsUsecase from "../../application/usecases/post/getAllPosts";
+import GetPostBySlugUsecase from "../../application/usecases/post/getPostBySlug";
+import UpdatePostUsecase from "../../application/usecases/post/updatePost";
+import DeletePostUsecase from "../../application/usecases/post/deletePost";
+import { authenticate, authorize } from "../../frameworks/middleware/auth";
+import { validate } from "../../frameworks/middleware/validator";
+import { Logger } from "../../shared/logger";
 
 const postSchema = Joi.object({
     title: Joi.string().required(),

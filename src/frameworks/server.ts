@@ -3,9 +3,9 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
-import { config } from "@/src/config";
-import { Logger } from "@/src/shared/logger";
-import { AppDataSource, initializeDataSource } from "@/src/infrastructure/database";
+import { config } from "../config";
+import { Logger } from "../shared/logger";
+import { AppDataSource, initializeDataSource } from "../infrastructure/database";
 import routes from "./routes";
 
 const app = express();
@@ -13,7 +13,7 @@ const app = express();
 // Middlewares
 app.use(helmet());
 app.use(cors({
-    origin: true, // Allow all for now to help with Vercel testing, or add your Vercel frontend URL
+    origin: true,
     credentials: true
 }));
 app.use(express.json());
@@ -29,6 +29,7 @@ app.use(async (req, res, next) => {
             await routes(app, AppDataSource);
             initialized = true;
         } catch (error) {
+            console.error("Initialization error:", error);
             return next(error);
         }
     }

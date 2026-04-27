@@ -1,12 +1,12 @@
 import { Express } from "express";
 import { DataSource } from "typeorm";
-import { PostController } from "@/src/adapters/controllers/PostController";
-import { CommentController } from "@/src/adapters/controllers/CommentController";
-import { AuthController } from "@/src/adapters/controllers/AuthController";
-import { InteractionController } from "@/src/adapters/controllers/InteractionController";
-import { PostRepository } from "@/src/infrastructure/services/PostRepository";
-import { CommentRepository } from "@/src/infrastructure/services/CommentRepository";
-import { UserRepository } from "@/src/infrastructure/services/UserRepository";
+import { PostController } from "../adapters/controllers/PostController";
+import { CommentController } from "../adapters/controllers/CommentController";
+import { AuthController } from "../adapters/controllers/AuthController";
+import { InteractionController } from "../adapters/controllers/InteractionController";
+import { PostRepository } from "../infrastructure/services/PostRepository";
+import { CommentRepository } from "../infrastructure/services/CommentRepository";
+import { UserRepository } from "../infrastructure/services/UserRepository";
 
 export default async (app: Express, dataSource: DataSource) => {
     // Initialize Repositories
