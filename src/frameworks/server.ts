@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
@@ -22,7 +22,7 @@ app.use(cookieParser());
 let initialized = false;
 
 // Vercel friendly initialization middleware
-app.use(async (req, res, next) => {
+app.use(async (req: Request, res: Response, next: NextFunction) => {
     if (!initialized) {
         try {
             await initializeDataSource();

@@ -1,4 +1,4 @@
-import { Express } from "express";
+import { Application, Request, Response } from "express";
 import { DataSource } from "typeorm";
 import { PostController } from "../adapters/controllers/PostController";
 import { CommentController } from "../adapters/controllers/CommentController";
@@ -8,7 +8,7 @@ import { PostRepository } from "../infrastructure/services/PostRepository";
 import { CommentRepository } from "../infrastructure/services/CommentRepository";
 import { UserRepository } from "../infrastructure/services/UserRepository";
 
-export default async (app: Express, dataSource: DataSource) => {
+export default async (app: Application, dataSource: DataSource) => {
     // Initialize Repositories
     const postRepository = new PostRepository();
     const commentRepository = new CommentRepository();
@@ -21,7 +21,7 @@ export default async (app: Express, dataSource: DataSource) => {
     const interactionController = new InteractionController(postRepository);
 
     // Health check
-    app.get("/health", (_req, res) => res.json({ status: "ok" }));
+    app.get("/health", (_req: Request, res: Response) => res.json({ status: "ok" }));
 
     // Routes
     app.use("/api/auth", authController.router);
@@ -30,7 +30,7 @@ export default async (app: Express, dataSource: DataSource) => {
     app.use("/api/interactions", interactionController.router);
 
     // Handle 404
-    app.use((_req, res) => {
+    app.use((_req: Request, res: Response) => {
         res.status(404).json({ error: "Route not found" });
     });
 };
