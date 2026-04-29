@@ -22,9 +22,7 @@ export default async (app: express.Application, dataSource: DataSource) => {
 
     // Welcome message
     app.get("/", (req: express.Request, res: express.Response) => res.json({ 
-        message: "Welcome to CanvasBlog API",
-        status: "Running",
-        documentation: "/api/posts"
+      
     }));
 
     // Health check
